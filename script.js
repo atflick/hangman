@@ -1,20 +1,30 @@
-
+var blank = '<div class="letter"></div>';
 var hangman = {
-  word: ["f","o","o","d"],
+  word: [],
   letter: "",
   length: 0,
   wordlength: function(){
     this.length = this.word.length;
   },
-  blanks: $("#word-area").children(),
+  blanks: [],
   turns: 0,
   wincount: 0,
 };
 
-hangman.wordlength();
+// var zIndex0 = "z-index", 0;
+// zIndex1 = '"z-index", "1"'; zIndex2 = '"z-index", "2"';
 
-console.log(hangman.blanks);
-console.log(hangman.length);
+
+$("#setword").click(function(){
+  event.preventDefault();
+  hangman.word = $("#answer").val().split("");
+  $("#answer").val("");
+  hangman.wordlength();
+  buildBlanks();
+  console.log(hangman.word)
+  $(".two-player").css("z-index", 0);
+})
+
 
 $(".keyboard button").click(function(){
   hangman.letter = $(this).html().toLowerCase();
@@ -42,4 +52,11 @@ function hangmanCheck(letter) {
       }
     }
   }
+}
+
+function buildBlanks() {
+  for (var i=0; i < hangman.length; i++) {
+      $("#word-area").append(blank);
+  }
+  hangman.blanks = $("#word-area").children();
 }
