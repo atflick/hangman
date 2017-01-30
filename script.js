@@ -27,9 +27,13 @@ $("#setword").click(function(){
 
 
 $(".keyboard button").click(function(){
-  hangman.letter = $(this).html().toLowerCase();
-  console.log(hangman.letter);
-  hangmanCheck(hangman.letter);
+  if ($(this).hasClass("x")) {
+    return;
+  } else {
+    $(this).addClass("x");
+    hangman.letter = $(this).html().toLowerCase();
+    hangmanCheck(hangman.letter);
+  }
 })
 
 function hangmanCheck(letter) {
@@ -39,6 +43,13 @@ function hangmanCheck(letter) {
     var turnId = "#turn" + hangman.turns;
     $(turnId).fadeIn("slow");
     console.log("wrong!");
+    if (hangman.turns == 11) {
+      setTimeout(function() {
+        $("#result").html("You lose!");
+        $(".result-screen").css("z-index", 2);
+      },
+      2000);
+    }
   } else {
     for (var i=0; i < hangman.length; i++) {
       if (letter == hangman.word[i]) {
@@ -47,16 +58,36 @@ function hangmanCheck(letter) {
         // add to wincount to check if game has been won yet
         hangman.wincount++;
         if (hangman.wincount == hangman.length) {
-          console.log("You win!");
+          $("#result").html("You win!");
+          $(".result-screen").css("z-index", 2);
         }
       }
     }
   }
 }
 
+// Function that builds the blanks for the word that is entered by player
 function buildBlanks() {
   for (var i=0; i < hangman.length; i++) {
       $("#word-area").append(blank);
   }
   hangman.blanks = $("#word-area").children();
 }
+
+// Resetting game instead of refreshing, called by play again button
+function reset() {
+  var keyArray = $(".keyboard").children()
+  for (var i = 0;i < 25; i++){
+    keyArray.eq(i).removeClass("x");
+    // removes hangman body parts
+    var turnId = "#turn" + i;
+    $(turnId).css("display","none");
+  }
+  $("#word-area").html("");
+  $(".result-screen").css("z-index", 0)
+  $(".two-player").css("z-index", 2)
+  hangman.turns = 0;
+  hangman.wincount = 0;
+}
+
+$("#play-again").click(reset);

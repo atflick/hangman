@@ -3,20 +3,32 @@
 <head>
   <meta charset="utf-8">
   <title>Hangman by Andy Flickinger</title>
-  <link href="https://fonts.googleapis.com/css?family=Dekko" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Dekko|Gochi+Hand|Neucha" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+  <section class="welcome">
+    <div class="modal">
+      <h2>Welcome to Hangman!</h2>
+      <h3>Choose your game:</h3>
+      <button id="1player" class="button">Single Player</button>
+      <button id="2player" class="button">Two Player</button>
+    </div>
+  </section>
+
   <section class="two-player">
-    <div class="word-entry">
+    <div class="modal">
       <h2>Enter your word</h2>
       <form class="">
-        <input type="password" id="answer">
-        <input type="submit" id="setword">
+        <input type="password" id="answer" placeholder="Type any word">
+        <button id="setword" class="button">Enter</button>
       </form>
     </div>
   </section>
+
   <section class="game-screen">
+    <h1>Hangman</h1>
     <div class="game-box">
       <div class="hangman">
         <div id="turn1" class="plank"></div>
@@ -59,12 +71,18 @@
         <button>Y</button>
         <button>Z</button>
       </aside>
-    <div id="word-area">
+      <div id="word-area">
 
-    </div>
+      </div>
     </div>
   </section>
 
+  <section class="result-screen">
+    <div class="modal">
+      <h2 id="result"></h2>
+      <button id="play-again" class="button">Play Again</button>
+    </div>
+  </section>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
   <script src="script.js" charset="utf-8"></script>
