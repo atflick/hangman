@@ -1,0 +1,215 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Dekko', cursive;
+}
+.game-box {
+  display: flex;
+  flex-direction: row;
+  border: 2px solid black;
+  border-radius: 10px;
+  max-width: 800px;
+  justify-content: space-around;
+  margin: 30px auto;
+  flex-wrap: wrap;
+}
+.hangman {
+  position: relative;
+  width: 400px;
+  height: 400px;
+}
+.hangman div {
+  display: none;
+}
+
+.keyboard {
+  height: 330px;
+  width: 180px;
+  display:flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 0 0;
+  margin-top: 50px;
+}
+button {
+  height: 35px;
+  width: 35px;
+  margin-right: 10px;
+  cursor: pointer;
+  border: 0px;
+  background: 0;
+  font-family: 'Dekko', cursive;
+  font-size: 24px;
+  line-height: 35px;
+}
+
+button:hover {
+  background-color: blue;
+}
+
+button:active {
+  top: 2px;
+  left: 2px;
+}
+
+button:focus {
+  outline: 0;
+}
+
+button:nth-of-type(7n+1) {
+  margin-left: 5px;
+}
+
+#word-area {
+  width: 100%;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.letter {
+  border-bottom: 2px solid black;
+  height: 50px;
+  width: 50px;
+  font-size: 26px;
+  margin: 0 10px;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 50px;
+}
+
+.plank {
+  background: url("img/wood-texture.jpg") repeat;
+  background-size: 5%;
+  position: absolute;
+  border: solid black 1px;
+  height: 8px;
+  width: 8px;
+  box-shadow: -2px -2px 5px gray;
+}
+
+.body {
+  border: solid black 4px;
+  background: #FFF;
+  position: absolute;
+/*   box-shadow: -1px -1px 10px black; */
+}
+
+/* Hangman parts */
+.hide {
+  display: none;
+}
+
+#turn1 {
+  width: 200px;
+  bottom: 10px;
+  left: 10px;
+/*   z-index: 1; */
+}
+/* pole */
+#turn2 {
+  width: 333px;
+  bottom: 182px;
+  left: -62px;
+  -ms-transform: rotate(270deg);
+  -webkit-transform: rotate(270deg);
+  transform: rotate(270deg);
+  z-index: 1;
+}
+/* hanging arm*/
+#turn3 {
+  left: 100px;
+  top: 43px;
+  width: 170px;
+  z-index: 1;
+}
+/* rope */
+#turn4 {
+  left: 241px;
+  top: 64px;
+  z-index: 0;
+  width: 50px;
+  height: 8px;
+  -ms-transform: rotate(270deg);
+  -webkit-transform: rotate(270deg);
+  transform: rotate(270deg);
+}
+/* brace */
+#turn5 {
+  width: 80px;
+  -ms-transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+  top: 72px;
+  left: 94px;
+  z-index: -1;
+
+}
+#turn6 {
+  border: solid black 7px;
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  left: 225px;
+  z-index: 2;
+  top: 90px;
+}
+
+#turn7 {
+  width: 0px;
+  height: 95px;
+  left: 260px;
+  top: 170px;
+  z-index: 1;
+}
+/* right arm */
+#turn8 {
+  height: 60px;
+    border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  -ms-transform: rotate(-50deg);
+  -webkit-transform: rotate(-50deg);
+  transform: rotate(-50deg);
+  top: 180px;
+  left: 288px;
+}
+/* left arm */
+#turn9 {
+  height: 60px;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  -ms-transform: rotate(50deg);
+  -webkit-transform: rotate(50deg);
+  transform: rotate(50deg);
+  top: 180px;
+  left: 232px;
+}
+/* left leg */
+#turn10 {
+  height: 80px;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  -ms-transform: rotate(-35deg);
+  -webkit-transform: rotate(-35deg);
+  transform: rotate(-35deg);
+  top: 264px;
+  left: 285px;
+}
+/* right leg */
+#turn11 {
+  height: 80px;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  -ms-transform: rotate(50deg);
+  -webkit-transform: rotate(50deg);
+  transform: rotate(35deg);
+  top: 264px;
+  left: 234px;
+}
+
+.game-over {
+
+}
