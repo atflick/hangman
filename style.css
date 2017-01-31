@@ -121,6 +121,7 @@ button:active {
 }
 
 .hangman {
+  margin-top: 20px;
   position: relative;
   width: 400px;
   height: 400px;
