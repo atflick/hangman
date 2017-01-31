@@ -96,7 +96,7 @@ function buildBlanks() {
 // Resetting game instead of refreshing, called by play again button
 function reset() {
   var keyArray = $(".keyboard").children()
-  for (var i = 0;i < 27; i++){
+  for (var i = 1;i < 28; i++){
     keyArray.eq(i).removeClass("x");
     keyArray.eq(i).removeClass("check");
     // removes hangman body parts
