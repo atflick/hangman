@@ -44,6 +44,10 @@
         <div id="turn11" class="body"></div>
       </div>
       <aside class="keyboard">
+        <div class="timeholder">
+          <h2 class="timertext">Timer: </h2><span id="timer"> 0</span>
+        </div>
+        <h2>Select a letter:</h2>
         <button>A</button>
         <button>B</button>
         <button>C</button>
@@ -75,11 +79,13 @@
 
       </div>
     </div>
+    <h4 id="nope">Nope!</h4>
+    <h4 id="correct">Correct!</h4>
   </section>
 
   <section class="result-screen">
     <div class="modal">
-      <h2 id="result"></h2>
+      <h2 id="result" class="wobbletext"></h2>
       <button id="play-again" class="button">Play Again</button>
     </div>
   </section>

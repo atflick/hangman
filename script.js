@@ -1,4 +1,5 @@
 var blank = '<div class="letter"></div>';
+var letterSelected, timerCount, seconds;
 var hangman = {
   word: [],
   letter: "",
@@ -15,7 +16,7 @@ $("#1player").click(function(){
   getRandomWord();
   $(".two-player").css("z-index", 0);
   $(".welcome").css("z-index", -1);
-
+  timer();
 });
 
 $("#2player").click(function(){
@@ -31,14 +32,15 @@ $("#setword").click(function(){
   buildBlanks();
   console.log(hangman.word)
   $(".two-player").css("z-index", 0);
+  timer();
 })
 
 
 $(".keyboard button").click(function(){
-  if ($(this).hasClass("x")) {
+  if ($(this).hasClass("x") || $(this).hasClass("check")) {
     return;
   } else {
-    $(this).addClass("x");
+    letterSelected = $(this);
     hangman.letter = $(this).html().toLowerCase();
     hangmanCheck(hangman.letter);
   }
@@ -46,29 +48,37 @@ $(".keyboard button").click(function(){
 
 function hangmanCheck(letter) {
   if (hangman.word.indexOf(letter) === -1) {
+    wrongResponse();
     // wrong answer increments game counter which adds a hangman part
     hangman.turns++;
     var turnId = "#turn" + hangman.turns;
     $(turnId).fadeIn("slow");
     console.log("wrong!");
     if (hangman.turns == 11) {
+      // you lose
       setTimeout(function() {
+        clearInterval(timerCount);
         $("#result").html("You lose!");
-        $("#play-again").before('<h3 id="correctword">The correct word was <strong>' + hangman.word.join("") + "</strong></h3>");
+        $("#play-again").before("<h3>The correct word was <strong>" + hangman.word.join("") + "</strong></h3>");
         $(".result-screen").css("z-index", 2);
       },
-      2000);
+      1000);
     }
   } else {
+    // correct response
+    correctResponse();
     for (var i=0; i < hangman.length; i++) {
       if (letter == hangman.word[i]) {
-        // insert into blank area
+        // insert letter into blanks area
         hangman.blanks.eq(i).html(letter);
         // add to wincount to check if game has been won yet
         hangman.wincount++;
         if (hangman.wincount == hangman.length) {
+          // you win
+          clearInterval(timerCount);
           $("#result").html("You win!");
           $(".result-screen").css("z-index", 2);
+          $("#play-again").before('<h3>Your time was ' + seconds + ' seconds');
         }
       }
     }
@@ -86,8 +96,9 @@ function buildBlanks() {
 // Resetting game instead of refreshing, called by play again button
 function reset() {
   var keyArray = $(".keyboard").children()
-  for (var i = 0;i < 26; i++){
+  for (var i = 0;i < 27; i++){
     keyArray.eq(i).removeClass("x");
+    keyArray.eq(i).removeClass("check");
     // removes hangman body parts
     var turnId = "#turn" + i;
     $(turnId).css("display","none");
@@ -97,7 +108,8 @@ function reset() {
   $(".result-screen").css("z-index", 0);
   $(".two-player").css("z-index", 2);
   $(".welcome").css("z-index", 3);
-  $("#correctword").remove();
+  $(".result-screen").children().find($("h3")).remove();
+  console.log($(".result-screen"));
   hangman.turns = 0;
   hangman.wincount = 0;
 }
@@ -115,7 +127,7 @@ function getRandomWord() {
       // some words contain hyphens, so this loop filters those out
       console.log(response[0].word);
       for (var i = 0; i < 10; i++) {
-        if (response[i].word.indexOf("-") == -1) {
+        if (response[i].word.indexOf("-") == -1 || response[i].word.indexOf(" ") == -1  ) {
           hangman.word = response[i].word.toLowerCase().split("");
           break;
         }
@@ -125,3 +137,36 @@ function getRandomWord() {
     }
   })
 }
+
+
+function correctResponse() {
+  $(letterSelected).addClass("check");
+  $("#correct").css("opacity", .8);
+  $("#correct").animate({
+    opacity: 0,
+    "font-size": 200
+  }, 700, function(){
+      $("#correct").css("font-size", "16px")
+  })
+}
+
+function wrongResponse() {
+  $(letterSelected).addClass("x");
+  $("#nope").css("opacity", .8);
+  $("#nope").animate({
+    opacity: 0,
+    "font-size": 200
+  }, 700, function(){
+      $("#nope").css("font-size", "16px")
+  })
+}
+
+function timer() {
+  seconds = 0;
+  timerCount = setInterval(function() {
+    seconds++;
+    $("#timer").html(seconds);
+  }, 1000);
+}
+
+console.log($(".result-screen").children().find($("h3")))
