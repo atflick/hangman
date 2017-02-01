@@ -2,7 +2,7 @@
 ## By Andy Flickinger
 
 - Game repo: https://github.com/atflick/hangman
-- Hosted game site: https://atflick.github.io/hangman/
+- Hosted game site: https://atflick.github.io/hangman/ (Warning: you need to disable security for the single player version to work.  This uses a non-secure API to access random words)
 
 ## Goal
 I wanted to create a hangman game that could be played by yourself or with a friend.  The game should be aesthetically pleasing and execute smoothly.
