@@ -13,7 +13,7 @@ var hangman = {
 };
 
 $("#1player").click(function(){
-  getRandomWord();
+  randomWord();
   $(".two-player").css("z-index", 0);
   $(".welcome").css("z-index", -1);
   timer();
@@ -118,25 +118,46 @@ $("#play-again").click(reset);
 
 // Random word getting function using Wordnik API http://developer.wordnik.com/docs.html#!/words/getRandomWords_get_3
 
-function getRandomWord() {
-  $.ajax({
-    url: "http://api.wordnik.com:80/v4/words.json/randomWords?hasDictionaryDef=true&includePartOfSpeech=noun&minCorpusCount=0&maxCorpusCount=-1&minDictionaryCount=1&maxDictionaryCount=-1&minLength=4&maxLength=12&limit=10&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5",
-    dataType: "json",
-    success: function(response) {
-      // fetches word from API, splits to array and assigns to the word
-      // some words contain hyphens, so this loop filters those out
-      console.log(response[0].word);
-      for (var i = 0; i < 10; i++) {
-        if (response[i].word.indexOf("-") == -1 || response[i].word.indexOf(" ") == -1  ) {
-          hangman.word = response[i].word.toLowerCase().split("");
-          break;
-        }
-      }
-      hangman.wordlength();
-      buildBlanks();
-    }
-  })
+// function getRandomWord() {
+//   $.ajax({
+//     url: "http://api.wordnik.com:80/v4/words.json/randomWords?hasDictionaryDef=true&includePartOfSpeech=noun&minCorpusCount=0&maxCorpusCount=-1&minDictionaryCount=1&maxDictionaryCount=-1&minLength=4&maxLength=12&limit=10&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5",
+//     dataType: "json",
+//     success: function(response) {
+//       // fetches word from API, splits to array and assigns to the word
+//       // some words contain hyphens, so this loop filters those out
+//       console.log(response[0].word);
+//       for (var i = 0; i < 10; i++) {
+//         if (response[i].word.indexOf("-") == -1 || response[i].word.indexOf(" ") == -1  ) {
+//           hangman.word = response[i].word.toLowerCase().split("");
+//           break;
+//         }
+//       }
+//       hangman.wordlength();
+//       buildBlanks();
+//     }
+//   })
+// }
+
+//  Different API because other needs to be served over https
+function randomWord() {
+    var requestStr = "http://randomword.setgetgo.com/get.php";
+
+    $.ajax({
+        type: "GET",
+        url: requestStr,
+        dataType: "jsonp",
+        jsonpCallback: 'randomWordComplete'
+    });
 }
+
+function randomWordComplete(data) {
+    console.log(data);
+    hangman.word = data.Word.toLowerCase().split("");
+    hangman.wordlength();
+    buildBlanks();
+    console.log(hangman.word);
+}
+
 
 
 function correctResponse() {
